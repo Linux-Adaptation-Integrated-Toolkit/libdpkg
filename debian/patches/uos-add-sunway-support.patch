@@ -1,0 +1,150 @@
+Description: <short summary of the patch>
+ TODO: Put a short summary on the line above and replace this paragraph
+ with a longer explanation of this change. Complete the meta-information
+ with other relevant fields (see below for details). To make it easier, the
+ information below has been extracted from the changelog. Adjust it or drop
+ it.
+ .
+ dpkg (1.19.7) unstable; urgency=medium
+ .
+   [ Guillem Jover ]
+   * dpkg: Fix off-by-one error in dpkg --abort-error. Closes: #924886
+     Thanks to Tom Goulet <tomg@sentex.ca>.
+   * dpkg: Set the force defaults before loading the config file, otherwise we
+     incorrectly override them. Regression introduced in dpkg 1.19.5.
+     Closes: #928671
+   * dpkg: Split the trigger dependtry into two, the second of which will be
+     the one checking trigger cycles when deferring trigger processing due to
+     unsatisfiable dependencies. Closes: #928429
+   * dpkg-deb: Validate ar member magic before normalizing any of its fields.
+   * dpkg-deb: Honor --nocheck when building packages with newlines in
+     filenames. Regression introduced in dpkg 1.18.1. Closes: #929727
+   * Documentation:
+     - rootless-builds.txt: Expand what the builder means. Mention the
+       dpkg-deb option to use to set the owner and group to root. And reword
+       the prototyping section to be less confusing with what is currently
+       implemented. Closes: #929019
+     - README: Clarify when autopoint is needed. Closes: #929601
+     - Fix typos in docs and output strings. Warned by codespell.
+ .
+   [ Updated programs translations ]
+   * Catalan (Guillem Jover).
+ .
+   [ Updated dselect translations ]
+   * Catalan (Guillem Jover).
+ .
+   [ Updated scripts translations ]
+   * Catalan (Guillem Jover).
+ .
+   [ Updated man pages translations ]
+   * Dutch (Frans Spiesschaert). Closes: #926665
+   * French (Jean-Pierre Giraud). Closes: #929664
+Author: Guillem Jover <guillem@debian.org>
+Bug-Debian: https://bugs.debian.org/924886
+Bug-Debian: https://bugs.debian.org/926665
+Bug-Debian: https://bugs.debian.org/928429
+Bug-Debian: https://bugs.debian.org/928671
+Bug-Debian: https://bugs.debian.org/929019
+Bug-Debian: https://bugs.debian.org/929601
+Bug-Debian: https://bugs.debian.org/929664
+Bug-Debian: https://bugs.debian.org/929727
+
+---
+The information above should follow the Patch Tagging Guidelines, please
+checkout http://dep.debian.net/deps/dep3/ to learn about the format. Here
+are templates for supplementary fields that you might want to add:
+
+Origin: <vendor|upstream|other>, <url of original patch>
+Bug: <url in upstream bugtracker>
+Bug-Debian: https://bugs.debian.org/<bugnumber>
+Bug-Ubuntu: https://launchpad.net/bugs/<bugnumber>
+Forwarded: <no|not-needed|url proving that it has been forwarded>
+Reviewed-By: <name and email of someone who approved the patch>
+Last-Update: 2020-12-11
+
+Index: dpkg-1.19.7+0eagle1/data/cputable
+===================================================================
+--- dpkg-1.19.7+0eagle1.orig/data/cputable	2020-12-11 13:59:01.000000000 +0800
++++ dpkg-1.19.7+0eagle1/data/cputable	2020-12-11 13:59:01.000000000 +0800
+@@ -50,4 +50,5 @@
+ sh4eb		sh4eb		sh4eb			32	big
+ sparc		sparc		sparc			32	big
+ sparc64		sparc64		sparc64			64	big
++sw_64		sw_64		sw_64.*			64	little
+ tilegx		tilegx		tilegx			64	little
+Index: dpkg-1.19.7+0eagle1/scripts/Dpkg/Arch.pm
+===================================================================
+--- dpkg-1.19.7+0eagle1.orig/scripts/Dpkg/Arch.pm	2020-12-11 13:59:01.000000000 +0800
++++ dpkg-1.19.7+0eagle1/scripts/Dpkg/Arch.pm	2020-12-11 13:59:01.000000000 +0800
+@@ -611,7 +611,7 @@
+ sub debarch_is_illegal
+ {
+     my ($arch, %opts) = @_;
+-    my $arch_re = qr/[a-zA-Z0-9][a-zA-Z0-9-]*/;
++    my $arch_re = qr/[a-zA-Z0-9][a-zA-Z0-9-_]*/;
+ 
+     if ($opts{positive}) {
+         return $arch !~ m/^$arch_re$/;
+Index: dpkg-1.19.7+0eagle1/scripts/Dpkg/Deps/Simple.pm
+===================================================================
+--- dpkg-1.19.7+0eagle1.orig/scripts/Dpkg/Deps/Simple.pm	2020-12-11 13:59:01.000000000 +0800
++++ dpkg-1.19.7+0eagle1/scripts/Dpkg/Deps/Simple.pm	2020-12-11 13:59:01.000000000 +0800
+@@ -171,7 +171,7 @@
+               ($pkgname_re)                 # package name
+               (?:                           # start of optional part
+                 :                           # colon for architecture
+-                ([a-zA-Z0-9][a-zA-Z0-9-]*)  # architecture name
++                ([a-zA-Z0-9][a-zA-Z0-9-_]*) # architecture name
+               )?                            # end of optional part
+               (?:                           # start of optional part
+                 \s* \(                      # open parenthesis for version part
+Index: dpkg-1.19.7+0eagle1/scripts/Dpkg/Vendor/Debian.pm
+===================================================================
+--- dpkg-1.19.7+0eagle1.orig/scripts/Dpkg/Vendor/Debian.pm	2020-12-11 13:59:01.000000000 +0800
++++ dpkg-1.19.7+0eagle1/scripts/Dpkg/Vendor/Debian.pm	2020-12-11 13:59:01.000000000 +0800
+@@ -323,8 +323,8 @@
+ 	#  (#574716).
+ 	$use_feature{hardening}{pie} = 0;
+     }
+-    if ($cpu =~ /^(?:ia64|alpha|hppa|nios2)$/ or $arch eq 'arm') {
+-	# Stack protector disabled on ia64, alpha, hppa, nios2.
++    if ($cpu =~ /^(?:ia64|alpha|hppa|nios2|sw6a|sw_64)$/ or $arch eq 'arm') {
++	# Stack protector disabled on ia64, alpha, hppa, nios2, sw6a, sw_64.
+ 	#   "warning: -fstack-protector not supported for this target"
+ 	# Stack protector disabled on arm (ok on armel).
+ 	#   compiler supports it incorrectly (leads to SEGV)
+Index: dpkg-1.19.7+0eagle1/scripts/dpkg-shlibdeps.pl
+===================================================================
+--- dpkg-1.19.7+0eagle1.orig/scripts/dpkg-shlibdeps.pl	2020-12-11 13:59:01.000000000 +0800
++++ dpkg-1.19.7+0eagle1/scripts/dpkg-shlibdeps.pl	2020-12-11 13:59:01.000000000 +0800
+@@ -910,7 +910,7 @@
+ 	    warning(g_('diversions involved - output may be incorrect'));
+ 	    print { *STDERR } " $_\n"
+ 		or syserr(g_('write diversion info to stderr'));
+-	} elsif (m/^([-a-z0-9+.:, ]+): (\/.*)$/) {
++	} elsif (m/^([-_a-z0-9+.:, ]+): (\/.*)$/) {
+ 	    my ($pkgs, $path) = ($1, $2);
+ 	    my $realpath = realpath($path);
+ 	    $cached_pkgmatch{$path} = $pkgmatch->{$path} = [ split /, /, $pkgs ];
+Index: dpkg-1.19.7+0eagle1/scripts/t/Dpkg_Arch.t
+===================================================================
+--- dpkg-1.19.7+0eagle1.orig/scripts/t/Dpkg_Arch.t	2020-12-11 13:59:01.000000000 +0800
++++ dpkg-1.19.7+0eagle1/scripts/t/Dpkg_Arch.t	2020-12-11 13:59:01.000000000 +0800
+@@ -16,7 +16,7 @@
+ use strict;
+ use warnings;
+ 
+-use Test::More tests => 16836;
++use Test::More tests => 17299;
+ 
+ use_ok('Dpkg::Arch', qw(debarch_to_debtuple debarch_to_multiarch
+                         debarch_eq debarch_is debarch_is_wildcard
+@@ -174,7 +174,7 @@
+ is(gnutriplet_to_debarch('unknown-unknown-unknown'), undef, 'unknown gnutriplet');
+ is(gnutriplet_to_debarch('x86_64-linux-gnu'), 'amd64', 'known gnutriplet');
+ 
+-is(scalar get_valid_arches(), 539, 'expected amount of known architectures');
++is(scalar get_valid_arches(), 554, 'expected amount of known architectures');
+ 
+ {
+     local $ENV{CC} = 'false';
