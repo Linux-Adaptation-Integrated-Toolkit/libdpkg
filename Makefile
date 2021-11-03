@@ -124,7 +124,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno config.status.lineno
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
-CONFIG_CLEAN_FILES = doc/Doxyfile
+CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 AM_V_P = $(am__v_P_$(V))
 am__v_P_ = $(am__v_P_$(AM_DEFAULT_VERBOSITY))
@@ -221,11 +221,11 @@ am__DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/config.h.in \
 	$(top_srcdir)/build-aux/install-sh \
 	$(top_srcdir)/build-aux/ltmain.sh \
 	$(top_srcdir)/build-aux/missing $(top_srcdir)/check.am \
-	$(top_srcdir)/cpan.am $(top_srcdir)/doc/Doxyfile.in ABOUT-NLS \
-	AUTHORS COPYING NEWS README THANKS TODO build-aux/ar-lib \
-	build-aux/compile build-aux/config.guess \
-	build-aux/config.rpath build-aux/config.sub \
-	build-aux/install-sh build-aux/ltmain.sh build-aux/missing
+	$(top_srcdir)/cpan.am ABOUT-NLS AUTHORS COPYING ChangeLog NEWS \
+	README THANKS TODO build-aux/ar-lib build-aux/compile \
+	build-aux/config.guess build-aux/config.rpath \
+	build-aux/config.sub build-aux/install-sh build-aux/ltmain.sh \
+	build-aux/missing
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 distdir = $(PACKAGE)-$(VERSION)
 top_distdir = $(distdir)
@@ -351,7 +351,7 @@ PACKAGE_COPYRIGHT_HOLDER = Dpkg Developers
 PACKAGE_CPAN_NAME = Dpkg
 PACKAGE_DIST_IS_RELEASE = 1
 PACKAGE_NAME = dpkg
-PACKAGE_RELEASE_DATE = 2020-12-11
+PACKAGE_RELEASE_DATE = 2021-01-18
 PACKAGE_STRING = dpkg 1.19.7
 PACKAGE_TARNAME = dpkg
 PACKAGE_URL = https://wiki.debian.org/Teams/Dpkg
@@ -641,8 +641,6 @@ $(srcdir)/config.h.in:  $(am__configure_deps)
 
 distclean-hdr:
 	-rm -f config.h stamp-h1
-doc/Doxyfile: $(top_builddir)/config.status $(top_srcdir)/doc/Doxyfile.in
-	cd $(top_builddir) && $(SHELL) ./config.status $@
 
 mostlyclean-libtool:
 	-rm -f *.lo

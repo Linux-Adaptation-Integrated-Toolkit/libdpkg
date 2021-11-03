@@ -1,0 +1,19 @@
+strhash.lo: strhash.c /usr/include/stdc-predef.h ../../config.h \
+ ../../lib/compat/compat.h ../../lib/dpkg/string.h \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/stddef.h \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/stdbool.h \
+ ../../lib/dpkg/macros.h
+
+/usr/include/stdc-predef.h:
+
+../../config.h:
+
+../../lib/compat/compat.h:
+
+../../lib/dpkg/string.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/8/include/stddef.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/8/include/stdbool.h:
+
+../../lib/dpkg/macros.h:

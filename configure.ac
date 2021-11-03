@@ -207,27 +207,11 @@ AM_MISSING_PROG([AUTOM4TE], [autom4te])
 
 AC_CONFIG_FILES([
   Makefile
-  t-func/Makefile
-  t-func/atlocal
-  dpkg-deb/Makefile
-  dpkg-split/Makefile
-  dselect/Makefile
-  dselect/methods/Makefile
-  dselect/po/Makefile.in
   lib/Makefile
   lib/compat/Makefile
   lib/dpkg/Makefile
   lib/dpkg/libdpkg.pc
   lib/dpkg/t/Makefile
-  doc/Doxyfile
-  man/Makefile
-  po/Makefile.in
-  scripts/Build.PL
-  scripts/Makefile
-  scripts/mk/Makefile
-  scripts/po/Makefile.in
-  src/Makefile
-  utils/Makefile
 ])
 AC_CONFIG_HEADERS([config.h])
 AC_OUTPUT

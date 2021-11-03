@@ -4,9 +4,9 @@
 # ----------------------
 AC_DEFUN([DPKG_BUILD_SHARED_LIBS], [
   m4_pattern_allow([DPKG_DEVEL_MODE])
-  AS_IF([test "$enable_shared" = "yes" && test -z "$DPKG_DEVEL_MODE"], [
-    AC_MSG_ERROR([building libdpkg as a shared library is not supported])
-  ])
+#  AS_IF([test "$enable_shared" = "yes" && test -z "$DPKG_DEVEL_MODE"], [
+#    AC_MSG_ERROR([building libdpkg as a shared library is not supported])
+#  ])
   AM_CONDITIONAL([BUILD_SHARED], [test "$enable_shared" = "yes"])
 ])# DPKG_BUILD_SHARED_LIBS
 

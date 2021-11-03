@@ -1,0 +1,16 @@
+c-ctype.lo: c-ctype.c /usr/include/stdc-predef.h ../../config.h \
+ ../../lib/compat/compat.h ../../lib/dpkg/c-ctype.h \
+ /usr/lib/gcc/x86_64-linux-gnu/8/include/stdbool.h \
+ ../../lib/dpkg/macros.h
+
+/usr/include/stdc-predef.h:
+
+../../config.h:
+
+../../lib/compat/compat.h:
+
+../../lib/dpkg/c-ctype.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/8/include/stdbool.h:
+
+../../lib/dpkg/macros.h:

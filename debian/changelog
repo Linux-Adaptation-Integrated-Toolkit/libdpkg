@@ -1,3 +1,9 @@
+dpkg (1.19.7-1+eagle) unstable; urgency=medium
+
+  * update
+
+ -- Dpkg Developers <debian-dpkg@lists.debian.org>  Mon, 18 Jan 2021 14:53:32 +0800
+
 dpkg (1.19.7+0eagle1-1) stable; urgency=medium
 
   * update source/format to quilt

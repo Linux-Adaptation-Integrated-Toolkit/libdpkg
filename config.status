@@ -393,7 +393,7 @@ on `(hostname || uname -n) 2>/dev/null | sed 1q`
 "
 
 # Files that config.status was made for.
-config_files=" Makefile t-func/Makefile t-func/atlocal dpkg-deb/Makefile dpkg-split/Makefile dselect/Makefile dselect/methods/Makefile dselect/po/Makefile.in lib/Makefile lib/compat/Makefile lib/dpkg/Makefile lib/dpkg/libdpkg.pc lib/dpkg/t/Makefile doc/Doxyfile man/Makefile po/Makefile.in scripts/Build.PL scripts/Makefile scripts/mk/Makefile scripts/po/Makefile.in src/Makefile utils/Makefile"
+config_files=" Makefile lib/Makefile lib/compat/Makefile lib/dpkg/Makefile lib/dpkg/libdpkg.pc lib/dpkg/t/Makefile"
 config_headers=" config.h"
 config_commands=" depfiles po-directories libtool t-func/atconfig"
 
@@ -816,27 +816,11 @@ do
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
     "t-func/atconfig") CONFIG_COMMANDS="$CONFIG_COMMANDS t-func/atconfig" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-    "t-func/Makefile") CONFIG_FILES="$CONFIG_FILES t-func/Makefile" ;;
-    "t-func/atlocal") CONFIG_FILES="$CONFIG_FILES t-func/atlocal" ;;
-    "dpkg-deb/Makefile") CONFIG_FILES="$CONFIG_FILES dpkg-deb/Makefile" ;;
-    "dpkg-split/Makefile") CONFIG_FILES="$CONFIG_FILES dpkg-split/Makefile" ;;
-    "dselect/Makefile") CONFIG_FILES="$CONFIG_FILES dselect/Makefile" ;;
-    "dselect/methods/Makefile") CONFIG_FILES="$CONFIG_FILES dselect/methods/Makefile" ;;
-    "dselect/po/Makefile.in") CONFIG_FILES="$CONFIG_FILES dselect/po/Makefile.in" ;;
     "lib/Makefile") CONFIG_FILES="$CONFIG_FILES lib/Makefile" ;;
     "lib/compat/Makefile") CONFIG_FILES="$CONFIG_FILES lib/compat/Makefile" ;;
     "lib/dpkg/Makefile") CONFIG_FILES="$CONFIG_FILES lib/dpkg/Makefile" ;;
     "lib/dpkg/libdpkg.pc") CONFIG_FILES="$CONFIG_FILES lib/dpkg/libdpkg.pc" ;;
     "lib/dpkg/t/Makefile") CONFIG_FILES="$CONFIG_FILES lib/dpkg/t/Makefile" ;;
-    "doc/Doxyfile") CONFIG_FILES="$CONFIG_FILES doc/Doxyfile" ;;
-    "man/Makefile") CONFIG_FILES="$CONFIG_FILES man/Makefile" ;;
-    "po/Makefile.in") CONFIG_FILES="$CONFIG_FILES po/Makefile.in" ;;
-    "scripts/Build.PL") CONFIG_FILES="$CONFIG_FILES scripts/Build.PL" ;;
-    "scripts/Makefile") CONFIG_FILES="$CONFIG_FILES scripts/Makefile" ;;
-    "scripts/mk/Makefile") CONFIG_FILES="$CONFIG_FILES scripts/mk/Makefile" ;;
-    "scripts/po/Makefile.in") CONFIG_FILES="$CONFIG_FILES scripts/po/Makefile.in" ;;
-    "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
-    "utils/Makefile") CONFIG_FILES="$CONFIG_FILES utils/Makefile" ;;
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
@@ -986,7 +970,7 @@ S["admindir"]="${prefix}/var/lib/dpkg"
 S["pkgconfdir"]="${prefix}/etc/dpkg"
 S["devlibdir"]="${exec_prefix}/lib"
 S["BUILD_DEVEL_DOCS"]="YES"
-S["PACKAGE_RELEASE_DATE"]="2020-12-11"
+S["PACKAGE_RELEASE_DATE"]="2021-01-18"
 S["PERL_LIBDIR"]="$(prefix)/share/perl5"
 S["PERL_MIN_VERSION"]="5.20.2"
 S["PERL"]="/usr/bin/perl"
